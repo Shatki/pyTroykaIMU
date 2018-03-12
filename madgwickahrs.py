@@ -19,7 +19,7 @@ from numpy.linalg import norm
 from quaternion import Quaternion
 
 
-class MadgwickAHRS:
+class MadgwickAHRS(object):
     sample_period = 1 / 256
     quaternion = Quaternion(1, 0, 0, 0)
     beta = 1

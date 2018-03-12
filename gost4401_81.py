@@ -9,6 +9,7 @@
  *  
  * algorithm by Oleg Kochetov <ok@noiselab.ru>
  """
+
 from math import log10
 
 class GOST4401(object):
