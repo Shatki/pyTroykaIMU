@@ -4,6 +4,11 @@ pyTroykaIMU
 Библиотека на Python 3 для Raspberry Pi, позволяющая управлять [IMU-сенсором на 10 степеней свободы (Troyka-модуль)](http://amperka.ru/product/troyka-imu-10-dof)
 от [Амперки](http://amperka.ru/).
 
+Подключение
+==========
+![alt-текст](http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:gpio_ext.png "Подключение аналогично любому модулю Troyka")
+
+.. image:: http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:gpio_ext.png
 
 Пример использования
 ====================
@@ -29,8 +34,31 @@ while True:
 
 Состав библиотеки
 ====================
-Название файла  | Содержание файла
-----------------|----------------------
-gost4401_81.py  | класс реализация модели атмосферы по ГОСТ4401
-l3g4200d.py     | класс гироскопа TroykaIMU модуля
-lis3mdl.py      | класс магнетометра TroykaIMU модуля
+Название файла      | Содержание файла
+--------------------|----------------------
+igrf12py            | классы и утилиты для реализации стандартной геомагнитной модели поля Земли
+gost4401_81.py      | класс реализация стандартной модели атмосферы по ГОСТ4401
+l3g4200d.py         | класс гироскопа TroykaIMU модуля
+lis3mdl.py          | класс магнетометра(компаса) TroykaIMU модуля
+lis331dlh.py        | класс акселерометра TroykaIMU модуля
+lps331ap.py         | класс барометра TroykaIMU модуля
+madgwickahrs.py     | класс магнетометра TroykaIMU модуля
+pytroykaimu.py      | класс TroykaIMU модуля
+quaternion.py       | класс реализации кватернионов и операций над ними
+
+
+
+IGRF12py
+==========
+
+Реализация класса стантартного [международного геомагнитного аналитического поля (IGRF)](https://ru.wikipedia.org/wiki/Международное_геомагнитное_аналитическое_поле) 
+позволяющего более эффективно использовать магнитометр на TroykaIMU модуле.
+
+.. image:: https://travis-ci.org/scivision/pyigrf12.svg?branch=master
+    :target: https://travis-ci.org/scivision/pyigrf12
+    
+.. image:: https://coveralls.io/repos/github/scivision/pyigrf12/badge.svg?branch=master
+    :target: https://coveralls.io/github/scivision/pyigrf12?branch=master
+
+Про использования данных пожно почитать, например тут:
+- http://geologyandpython.com/igrf.html
