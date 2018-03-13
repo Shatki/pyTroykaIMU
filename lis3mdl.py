@@ -23,7 +23,7 @@ import smbus
 from math import atan2, pi, degrees
 
 
-class LIS3MDL:
+class LIS3MDL(object):
     register = {
         'WHO_AM_I'			: 0x0F,
         'CTRL_REG1'			: 0x20,

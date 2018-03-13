@@ -78,3 +78,9 @@ IGRF12py
 Про использования данных пожно почитать, например тут:
 - http://geologyandpython.com/igrf.html
 - http://geomag.nrcan.gc.ca/calc/calc-en.php
+
+
+Обратная связь
+==========
+
+По вопросам о работе библиотеки или обнаруженным ошибкам писать на selidimail@gmail.com
