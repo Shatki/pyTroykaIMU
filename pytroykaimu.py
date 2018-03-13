@@ -23,7 +23,7 @@ from lis3mdl import LIS3MDL         # Магнитометр
 from lps331ap import LPS331AP       # Барометр
 
 
-class pyTroykaIMU(object):
+class TroykaIMU(object):
     def __init__(self):
         self.accelerometer = LIS331DLH()
         self.gyroscope = L3G4200D()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# LIS3MDL maggnetic sensor control class
+# LIS3MDL magnetic sensor control class
 # Digital output magnetic sensor: ultra-low-power, high-performance 3-axis magnetometer
 #
 # Copyright 2016 Seliverstov Dmitriy <selidimail@gmail.com>
