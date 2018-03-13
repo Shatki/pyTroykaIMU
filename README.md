@@ -4,11 +4,16 @@ pyTroykaIMU
 Библиотека на Python 3 для Raspberry Pi, позволяющая управлять [IMU-сенсором на 10 степеней свободы (Troyka-модуль)](http://amperka.ru/product/troyka-imu-10-dof)
 от [Амперки](http://amperka.ru/).
 
+![alt-текст](https://static-eu.insales.ru/images/products/1/799/58802975/troyka-imu-10-dof.1.jpg "IMU-сенсор на 10 степеней свободы (Troyka-модуль)")
+
+
 Подключение
 ==========
 ![alt-текст](http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:gpio_ext.png "Подключение аналогично любому модулю Troyka")
 
-.. image:: http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:gpio_ext.png
+Для подключения большего большего количества Troyka модулей очень удобно использовать, например [Troyka Pad](http://amperka.ru/product/troyka-pad-1x4)
+
+![alt-текст](https://static-eu.insales.ru/images/products/1/2757/98380485/troyka_pad_all_in.jpg "Troyka Pad")
 
 Пример использования
 ====================
@@ -62,3 +67,4 @@ IGRF12py
 
 Про использования данных пожно почитать, например тут:
 - http://geologyandpython.com/igrf.html
+- http://geomag.nrcan.gc.ca/calc/calc-en.php
