@@ -67,10 +67,7 @@ IGRF12py
 позволяющего более эффективно использовать магнитометр на TroykaIMU модуле.
 
 
-![alt-текст](https://travis-ci.org/scivision/pyigrf12.svg?branch=master "pyigrf12")
-
-![alt-текст](https://coveralls.io/repos/github/scivision/pyigrf12/badge.svg?branch=master "pyigrf12")
-    
+![alt-текст](https://pbs.twimg.com/media/DNyvjhQVQAAl9Iu.png "pyigrf12")  
 
 Про использования данных пожно почитать, например тут:
 - http://geologyandpython.com/igrf.html
