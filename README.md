@@ -66,11 +66,11 @@ IGRF12py
 Реализация класса стантартного [международного геомагнитного аналитического поля (IGRF)](https://ru.wikipedia.org/wiki/Международное_геомагнитное_аналитическое_поле) 
 позволяющего более эффективно использовать магнитометр на TroykaIMU модуле.
 
-.. image:: https://travis-ci.org/scivision/pyigrf12.svg?branch=master
-    :target: https://travis-ci.org/scivision/pyigrf12
+
+![alt-текст](https://travis-ci.org/scivision/pyigrf12.svg?branch=master "pyigrf12")
+
+![alt-текст](https://coveralls.io/repos/github/scivision/pyigrf12/badge.svg?branch=master "pyigrf12")
     
-.. image:: https://coveralls.io/repos/github/scivision/pyigrf12/badge.svg?branch=master
-    :target: https://coveralls.io/github/scivision/pyigrf12?branch=master
 
 Про использования данных пожно почитать, например тут:
 - http://geologyandpython.com/igrf.html
