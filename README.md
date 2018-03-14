@@ -53,7 +53,7 @@ l3g4200d.py         | класс гироскопа TroykaIMU модуля
 lis3mdl.py          | класс магнетометра(компаса) TroykaIMU модуля
 lis331dlh.py        | класс акселерометра TroykaIMU модуля
 lps331ap.py         | класс барометра TroykaIMU модуля
-madgwickahrs.py     | класс магнетометра TroykaIMU модуля
+madgwickahrs.py     | класс реализующий алгоритм Madgwick AHRS для определения положения в пространстве
 pytroykaimu.py      | класс TroykaIMU модуля
 quaternion.py       | класс реализации кватернионов и операций над ними
 
