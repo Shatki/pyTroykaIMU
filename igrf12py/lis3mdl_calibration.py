@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lis3mdl import LIS3MDL_TWI
+from lis3mdl import LIS3MDL
 from time import sleep
 import numpy
 from numpy import linalg
@@ -91,7 +91,7 @@ def real_time_calibration(n=100):
 
 
 
-magneto = LIS3MDL_TWI()
+magneto = LIS3MDL()
 
 #offsets, scale = real_time_calibration()
 callibration()
