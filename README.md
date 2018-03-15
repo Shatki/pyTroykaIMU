@@ -31,7 +31,7 @@ pip install smbus
 sudo raspi-config
 ```
 - Включите I2C:
-[alt-текст](http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:interfacing_1.png "Зайдите в настройки интерфейсов Вашего Raspberry")
+![alt-текст](http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:interfacing_1.png "Зайдите в настройки интерфейсов Вашего Raspberry")
 ![alt-текст](http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:i2c-02.png "Выберите интерфейс I2C")
 ![alt-текст](http://wiki.amperka.ru/_media/продукты:troyka-gpio-expander:enable_3.png "Подтвердите влючение")
 
