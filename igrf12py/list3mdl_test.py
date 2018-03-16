@@ -52,9 +52,7 @@ while True:
     Magx = readMagx()
     Magy = readMagy()
     Magz = readMagz()
-    print Magx
-    print Magy
-    print Magz
+    print(Magx, Magy, Magz)
 
     # Calculate heading
 
@@ -64,7 +62,7 @@ while True:
     if heading < 0:
         heading += 360
 
-    print "Mtotal       : ", MagDataTotal(), "Guass"
-    print "HEADING      : ", heading
-    print "****************************"
+    print("Mtotal       : ", MagDataTotal(), "Guass")
+    print("HEADING      : ", heading)
+    print("****************************")
     time.sleep(0.5)

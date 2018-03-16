@@ -209,7 +209,7 @@ class LIS3MDL(object):
 
     # Power-Down mode
     def enable(self, power=True):
-        if power:
+        if not power:
             self._ctrlReg3 |= (3 << 0)
         else:
             self._ctrlReg3 &= ~(3 << 0)
