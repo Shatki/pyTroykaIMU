@@ -177,14 +177,14 @@ class LIS331DLH(object):
 
     def read_axis(self, reg):
         # assert MSB to enable register address auto increment
-        return self.segned_int32(self.wire.read_word_data(self._addr, reg | (1 << 7)))
+        return self.signed_int32(self.wire.read_word_data(self._addr, reg | (1 << 7)))
 
     def read_xyz(self):
         # assert MSB to enable register address auto increment
         values = self.wire.read_i2c_block_data(self._addr, self.register['OUT_X_L'] | (1 << 7), 6)
-        return (self.segned_int32(values[1] << 8 | values[0]),
-                self.segned_int32(values[3] << 8 | values[2]),
-                self.segned_int32(values[5] << 8 | values[4]))
+        return (self.signed_int32(values[1] << 8 | values[0]),
+                self.signed_int32(values[3] << 8 | values[2]),
+                self.signed_int32(values[5] << 8 | values[4]))
 
     def read_gx(self):
         return self.read_axis(self.register['OUT_X_L']) * self._mult
@@ -213,7 +213,7 @@ class LIS331DLH(object):
         return gx * self._mult * self.G, gy * self._mult * self.G, gz * self._mult * self.G
 
     @staticmethod
-    def segned_int32(number):
+    def signed_int32(number):
         if number & (1 << 15):
             return number | ~65535
         else:

@@ -83,9 +83,21 @@ class LIS3MDL(object):
         'ODR_40'            : 0b0011000,      # 40    Hz
         'ODR_80'            : 0b0011100,      # 80    Hz
     }
+
+    temperature_measure = {'C',
+                           'K',
+                           'F',
+                           }
+
     # Default
     I2C_DEFAULT_ADDRESS = 0b0011100
     I2C_IDENTITY = 0x3d
+
+    # Additional constants
+    DEFAULT_TEMPERATURE_MEASURE = 'C'
+    CELSIUS_TO_KELVIN_OFFSET = 273.15
+
+
 
     _mult = sens_fs[range_fs[0]]
     _ctrlReg1 = 0
@@ -222,14 +234,14 @@ class LIS3MDL(object):
     # Getting data operations
     def read_axis(self, reg):
         # assert MSB to enable register address auto increment
-        return self.get_signed_number(self.wire.read_word_data(self._addr, reg | (1 << 7)))
+        return self.signed_int32(self.wire.read_word_data(self._addr, reg | (1 << 7)))
 
     def read_xyz(self):
         # assert MSB to enable register address auto increment
         values = self.wire.read_i2c_block_data(self._addr, self.register['OUT_X_L'] | (1 << 7), 6)
-        return (self.get_signed_number(values[1] << 8 | values[0]),
-                self.get_signed_number(values[3] << 8 | values[2]),
-                self.get_signed_number(values[5] << 8 | values[4]))
+        return (self.signed_int32(values[1] << 8 | values[0]),
+                self.signed_int32(values[3] << 8 | values[2]),
+                self.signed_int32(values[5] << 8 | values[4]))
 
     def read_gauss_x(self):
         return self.read_axis(self.register['OUT_X_L']) / self._mult
@@ -276,8 +288,23 @@ class LIS3MDL(object):
             heading -= two_pi
         return degrees(heading)
 
+    # Temperature read data
+    def read_temperature_raw(self):
+        # assert MSB to enable register address auto increment
+        return self.signed_int32(self.wire.read_word_data(self._address, self.register['TEMP_OUT_L'] | (1 << 7)))
+
+    def read_temperature(self, measure=DEFAULT_TEMPERATURE_MEASURE):
+        if measure in self.temperature_measure:
+            return self.read_temperature_raw() / 480 + 42.5
+
+    def read_temperature_k(self):
+        return self.read_temperature_raw() / 480 + 42.5 + self.CELSIUS_TO_KELVIN_OFFSET
+
+    def read_temperature_f(self):
+        return self.read_temperature_raw() / 480 * 1.8 + 108.5
+
     @staticmethod
-    def get_signed_number(number):
+    def signed_int32(number):
         if number & (1 << 15):
             return number | ~65535
         else:
