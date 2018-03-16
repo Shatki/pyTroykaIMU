@@ -90,7 +90,7 @@ class LIS3MDL(object):
                            }
 
     # Default
-    I2C_DEFAULT_address = 0b0011100
+    I2C_DEFAULT_ADDRESS = 0b0011100
     I2C_IDENTITY = 0x3d
 
     # Additional constants
@@ -113,7 +113,7 @@ class LIS3MDL(object):
     _bias = [0.0, 0.0, 0.0]
 
     def __init__(self, port=1,
-                 address=I2C_DEFAULT_addressESS,
+                 address=I2C_DEFAULT_ADDRESS,
                  sens_range=range_fs[0],
                  temperature_sensor_enable=True,
                  axis_operation_mode=axis_operation_mode['ULTRA_HIGH_PERF'],
