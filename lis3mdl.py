@@ -90,7 +90,7 @@ class LIS3MDL(object):
                            }
 
     # Default
-    I2C_DEFAULT_ADDRESS = 0b0011100
+    I2C_DEFAULT_addressESS = 0b0011100
     I2C_IDENTITY = 0x3d
 
     # Additional constants
@@ -113,7 +113,7 @@ class LIS3MDL(object):
     _bias = [0.0, 0.0, 0.0]
 
     def __init__(self, port=1,
-                 address=I2C_DEFAULT_ADDRESS,
+                 address=I2C_DEFAULT_addressESS,
                  sens_range=range_fs[0],
                  temperature_sensor_enable=True,
                  axis_operation_mode=axis_operation_mode['ULTRA_HIGH_PERF'],
@@ -122,7 +122,7 @@ class LIS3MDL(object):
         # Подключаемся к шине I2C
         self.wire = smbus.SMBus(port)
         # Запоминаем адрес
-        self._addr = address
+        self._address = address
         # Сбрасываем все регистры по умолчанию
         self.soft_reset()
         # Устанавливаем чувствительность
@@ -139,7 +139,7 @@ class LIS3MDL(object):
         self.output_data_rate(output_data_rate)
 
     def identity(self):
-        return self.wire.read_byte_data(self._addr, self.register['WHO_AM_I']) == self.I2C_IDENTITY
+        return self.wire.read_byte_data(self._address, self.register['WHO_AM_I']) == self.I2C_IDENTITY
 
     # Register 1 operations
     # TEMP_EN OM1 OM0 DO2 DO1 DO0 FAST_ODR ST
@@ -150,17 +150,17 @@ class LIS3MDL(object):
             self._ctrlReg1 |= (1 << 7)
         else:
             self._ctrlReg1 &= ~(1 << 7)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG1'], self._ctrlReg1)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG1'], self._ctrlReg1)
 
     # X and Y axes operative mode selection. Default value: 00
     def operation_mode_xy_axis(self, mode=axis_operation_mode['LOW_POWER']):
         self._ctrlReg1 |= mode
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG1'], self._ctrlReg1)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG1'], self._ctrlReg1)
 
     # Output data rate selection. Default value: 100
     def output_data_rate(self, rate=configuration['ODR_10']):
         self._ctrlReg1 |= rate
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG1'], self._ctrlReg1)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG1'], self._ctrlReg1)
 
     # FAST_ODR enables data rates higher than 80 Hz. Default value: 0
     # (0: Fast_ODR disabled; 1: FAST_ODR enabled)
@@ -169,7 +169,7 @@ class LIS3MDL(object):
             self._ctrlReg1 |= (1 << 1)
         else:
             self._ctrlReg1 &= ~(1 << 1)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG1'], self._ctrlReg1)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG1'], self._ctrlReg1)
 
     # Self-test enable. Default value: 0 (0: self-test disabled; 1: self-test enabled)
     def self_test(self, enable=False):
@@ -177,7 +177,7 @@ class LIS3MDL(object):
             self._ctrlReg1 |= (1 << 0)
         else:
             self._ctrlReg1 &= ~(1 << 0)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG1'], self._ctrlReg1)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG1'], self._ctrlReg1)
 
     # Register 2 operations
     # 0 FS1 FS0 0 REBOOT SOFT_RST 0 0
@@ -186,15 +186,15 @@ class LIS3MDL(object):
         if sens_range in self.range_fs:
             self._ctrlReg2 = self.adr_fs_conf[sens_range]
             self._mult = self.sens_fs[sens_range]
-            self.wire.write_byte_data(self._addr, self.register['CTRL_REG2'], self._ctrlReg2)
+            self.wire.write_byte_data(self._address, self.register['CTRL_REG2'], self._ctrlReg2)
 
     def soft_reset(self):
         # Configuration registers and user register reset function. (0: Default value; 1: Reset operation)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG2'], self._ctrlReg2 | (1 << 2))
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG2'], self._ctrlReg2 | (1 << 2))
 
     def reboot(self):
         # Reboot memory content. Default value: 0 (0: normal mode; 1: reboot memory content)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG2'], self._ctrlReg2 | (1 << 3))
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG2'], self._ctrlReg2 | (1 << 3))
 
     # Register 3 operations
     # 0 0 LP 0 0 SIM MD1 MD0
@@ -205,7 +205,7 @@ class LIS3MDL(object):
     def low_power(self):
         self._ctrlReg3 |= (1 << 5)
         self._ctrlReg1 |= self.configuration['ODR_0625']
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG3'], self._ctrlReg3)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG3'], self._ctrlReg3)
 
     # Power-Down mode
     def enable(self, power=True):
@@ -213,14 +213,14 @@ class LIS3MDL(object):
             self._ctrlReg3 |= (3 << 0)
         else:
             self._ctrlReg3 &= ~(3 << 0)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG3'], self._ctrlReg3)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG3'], self._ctrlReg3)
 
     # Register 4 operations
     # 0 0 0 0 OMZ1 OMZ0 BLE 0
     # X and Y axes operative mode selection. Default value: 00
     def operation_mode_z_axis(self, mode=axis_operation_mode['LOW_POWER']):
         self._ctrlReg4 |= (mode >> 3)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG4'], self._ctrlReg4)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG4'], self._ctrlReg4)
 
     # Register 5 operations
     # FAST_READ BDU 0 0 0 0 0 0
@@ -229,16 +229,16 @@ class LIS3MDL(object):
             self._ctrlReg5 |= (1 << 7)
         else:
             self._ctrlReg5 &= ~(1 << 7)
-        self.wire.write_byte_data(self._addr, self.register['CTRL_REG5'], self._ctrlReg5)
+        self.wire.write_byte_data(self._address, self.register['CTRL_REG5'], self._ctrlReg5)
 
     # Getting data operations
     def read_axis(self, reg):
         # assert MSB to enable register address auto increment
-        return self.signed_int32(self.wire.read_word_data(self._addr, reg | (1 << 7)))
+        return self.signed_int32(self.wire.read_word_data(self._address, reg | (1 << 7)))
 
     def read_xyz(self):
         # assert MSB to enable register address auto increment
-        values = self.wire.read_i2c_block_data(self._addr, self.register['OUT_X_L'] | (1 << 7), 6)
+        values = self.wire.read_i2c_block_data(self._address, self.register['OUT_X_L'] | (1 << 7), 6)
         return (self.signed_int32(values[1] << 8 | values[0]),
                 self.signed_int32(values[3] << 8 | values[2]),
                 self.signed_int32(values[5] << 8 | values[4]))
@@ -294,14 +294,15 @@ class LIS3MDL(object):
         return self.signed_int32(self.wire.read_word_data(self._address, self.register['TEMP_OUT_L'] | (1 << 7)))
 
     def read_temperature(self, measure=DEFAULT_TEMPERATURE_MEASURE):
-        if measure in self.temperature_measure:
-            return self.read_temperature_raw() / 480 + 42.5
+        self._temperature = self.read_temperature_raw()
+        if measure in self.temperature_measure and self._temperature:
+            return self._temperature / 8.0 + 25.0
 
     def read_temperature_k(self):
-        return self.read_temperature_raw() / 480 + 42.5 + self.CELSIUS_TO_KELVIN_OFFSET
+        return self.read_temperature_raw() / 8.0 + 25.0 + self.CELSIUS_TO_KELVIN_OFFSET
 
     def read_temperature_f(self):
-        return self.read_temperature_raw() / 480 * 1.8 + 108.5
+        return self.read_temperature_raw() / 8.0 * 1.8 + 108.5
 
     @staticmethod
     def signed_int32(number):
