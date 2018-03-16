@@ -90,7 +90,7 @@ class LIS3MDL(object):
                            }
 
     # Default
-    I2C_DEFAULT_addressESS = 0b0011100
+    I2C_DEFAULT_address = 0b0011100
     I2C_IDENTITY = 0x3d
 
     # Additional constants
