@@ -4,7 +4,7 @@ from time import sleep
 import numpy
 from numpy import linalg
 """
-cal_lib.py - Ellipsoid into Sphere calibration library based upon numpy and linalg
+Ellipsoid into Sphere calibration library based upon numpy and linalg
 Copyright (C) 2012 Fabio Varesano <fabio at varesano dot net>
 
 Development of this code has been supported by the Department of Computer Science,
@@ -52,7 +52,7 @@ def real_time_calibration(n=100):
     samples_z = []
 
     for num in range(0, n):
-        x, y, z = magneto.read_xyz
+        x, y, z = magneto.read_xyz()
         samples_x.append(float(x))
         samples_y.append(float(y))
         samples_z.append(float(z))
