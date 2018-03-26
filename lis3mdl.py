@@ -266,10 +266,10 @@ class LIS3MDL(object):
     def calibrate(self):
         calibrated_values = [0.0, 0.0, 0.0]
         uncalibrated_values = self.read_xyz()
-        # for i in range(0, 3):
-        #    uncalibrated_values[i] -= self._bias[i]
-        for i in range(0, 3):
-            for j in range(0, 3):
+        for i in range(0, 2):
+            uncalibrated_values[i] -= self._bias[i]
+        for i in range(0, 2):
+            for j in range(0, 2):
                 calibrated_values[i] += self._calibration_matrix[i][j] * (uncalibrated_values[j] - self._bias[j])
         return calibrated_values
 
