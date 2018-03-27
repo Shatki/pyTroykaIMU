@@ -19,6 +19,7 @@ fileID = fopen('calibrate.txt', 'w');
 
 for n = 1:3000
     str1= fscanf(s, '%c', 128);
+    disp(n);
     disp(str1);
     C = strsplit(str1, ';');
 

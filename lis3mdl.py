@@ -25,8 +25,8 @@ from math import atan2, pi, degrees
 
 class LIS3MDL(object):
     register = {
-        'WHO_AM_I'			: 0x0F,
-        'CTRL_REG1'			: 0x20,
+        'WHO_AM_I': 0x0F,
+        'CTRL_REG1'		: 0x20,
         'CTRL_REG2'			: 0x21,
         'CTRL_REG3'			: 0x22,
         'CTRL_REG4'			: 0x23,
@@ -44,7 +44,7 @@ class LIS3MDL(object):
         'INT_SRC'			: 0x31,
         'INT_THS_L'			: 0x32,
         'INT_THS_H'			: 0x33,
-        }
+    }
 
     range_fs = (
         '4_GAUSS',
@@ -72,7 +72,7 @@ class LIS3MDL(object):
         'HIGH_PERF'         : 0b01000000,      # High-performance mode
         'ULTRA_HIGH_PERF'   : 0b01100000,      # Ultra-High-performance mode
     }
-    
+
     configuration = {
         'ODR_0625'          : 0b0000000,      # 0.625 Hz
         'ODR_125'           : 0b0000100,      # 1.25  Hz
@@ -256,21 +256,25 @@ class LIS3MDL(object):
         gauss = self.read_xyz()
         return gauss[0] / self._mult, gauss[1] / self._mult, gauss[2] / self._mult
 
-    def read_calibrate(self):
+    def read_calibrate_xyz(self):
         return self.calibrate()
 
-    def read_calibrate_gauss(self):
-        calibrate_gauss = self.read_calibrate()
+    def read_calibrate_gauss_xyz(self):
+        calibrate_gauss = self.read_calibrate_xyz()
         return calibrate_gauss[0] / self._mult, calibrate_gauss[1] / self._mult, calibrate_gauss[2] / self._mult
 
     def calibrate(self):
-        calibrated_values = [0.0, 0.0, 0.0]
-        uncalibrated_values = self.read_xyz()
-        for i in range(0, 2):
-            uncalibrated_values[i] -= self._bias[i]
-        for i in range(0, 2):
-            for j in range(0, 2):
-                calibrated_values[i] += self._calibration_matrix[i][j] * (uncalibrated_values[j] - self._bias[j])
+        calibrated_values = []
+        uncalibrated_values = []
+        read_values = self.read_xyz()
+        for i in range(0, 3):
+            uncalibrated_values.append(read_values[i] - self._bias[i])
+
+        for i in range(0, 3):
+            result = 0
+            for j in range(0, 3):
+                result += self._calibration_matrix[i][j] * uncalibrated_values[j]
+            calibrated_values.append(result)
         return calibrated_values
 
     def calibrate_matrix(self, calibration_matrix, bias):
@@ -279,9 +283,12 @@ class LIS3MDL(object):
         return None
 
     def read_azimut(self):
-        calibration = self.calibrate()
+        if self._bias[0] != 0 and self._calibration_matrix[0][0] != 0:
+            sensor = self.calibrate()
+        else:
+            sensor = self.read_xyz()
         two_pi = 2 * pi
-        heading = atan2(calibration[1], calibration[0])
+        heading = atan2(sensor[1], sensor[0])
         if heading < 0:
             heading += two_pi
         elif heading > two_pi:
