@@ -283,7 +283,7 @@ class LIS3MDL(object):
         return None
 
     def read_azimut(self):
-        if self._bias[0] != 0 and self._calibration_matrix[0][0] != 0:
+        if (self._bias[0] | self._bias[1] | self._bias[2]) != 0 and self._calibration_matrix[0][0] != 0:
             sensor = self.calibrate()
         else:
             sensor = self.read_xyz()
