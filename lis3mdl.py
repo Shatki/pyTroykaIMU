@@ -25,8 +25,8 @@ from math import atan2, pi, degrees
 
 class LIS3MDL(object):
     register = {
-        'WHO_AM_I': 0x0F,
-        'CTRL_REG1'		: 0x20,
+        'WHO_AM_I'          : 0x0F,
+        'CTRL_REG1'		    : 0x20,
         'CTRL_REG2'			: 0x21,
         'CTRL_REG3'			: 0x22,
         'CTRL_REG4'			: 0x23,
