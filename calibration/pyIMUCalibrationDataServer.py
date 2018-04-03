@@ -42,7 +42,7 @@ while True:
             m_x, m_y, m_z = imu.magnetometer.read_gauss_xyz()
             # Uncomment this, if you want calibration in raw measurements
             # m_x, m_y, m_z = imu.magnetometer.read_xyz()
-            
+
             a_x, a_y, a_z = imu.accelerometer.read_gxyz()
 
             g_x, g_y, g_z = imu.gyroscope.read_radians_per_second_xyz()
