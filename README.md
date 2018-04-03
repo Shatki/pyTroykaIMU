@@ -148,7 +148,7 @@ HOST = '192.168.1.10';
  - значения смещения по всем трем осям: Combined bias (b);
  - и матрицу масштаба и ортогонализации: Correction for combined scale factors, misalignments and soft iron (A-1).
 
-```matlab
+```python
 calibration_matrix = [[0.858751, 0.029588, 0.022668],
                       [0.029588, 0.871676, 0.001220],
                       [0.022668, 0.001220, 0.892654]]
