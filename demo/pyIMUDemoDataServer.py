@@ -1,4 +1,3 @@
-
 from socket import *
 #from madgwickahrs import MadgwickAHRS
 from pytroykaimu import TroykaIMU
@@ -54,11 +53,12 @@ while True:
 
             print(imu.magnetometer.read_azimut())
 
-            data = "{:f}; {:f}; {:f}; " \
-                   "{:f}; {:f}; {:f}; " \
-                   "{:f}; {:f}; {:f}".format(m_x, m_y, m_z,
-                                             a_x, a_y, a_z,
-                                             g_x, g_y, g_z)
+            data = "{:f};\t{:f};\t{:f};\t" \
+                   "{:f};\t{:f};\t{:f};\t" \
+                   "{:f};\t{:f};\t{:f};\t{:f}".format(m_x, m_y, m_z,
+                                                      a_x, a_y, a_z,
+                                                      g_x, g_y, g_z,
+                                                      imu.magnetometer.read_azimut())
 
             dataencode = data.encode('utf-8').ljust(128, b' ')
 
