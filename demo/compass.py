@@ -5,7 +5,7 @@ import pygame
 from socket import *
 
 # Setup your Raspberry Pi host first!
-HOST = '192.168.0.76'
+HOST = '192.168.1.10'
 PORT = 21567
 BUFSIZ = 128
 ADDR = (HOST, PORT)
@@ -48,12 +48,13 @@ def read_compass():
         if data:
             # print(data)
             data = data.decode().split(';')
+            print(float(data[9]))
             return float(data[9])
     except:
         print("Server wasstoped. Demo finished")
         tcpCliSock.close()
         exit()
-    return
+    return 0
 
 
 def runGame():
