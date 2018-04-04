@@ -1,4 +1,5 @@
 from socket import *
+# from madgwickahrs import MadgwickAHRS
 from pytroykaimu import TroykaIMU
 import time
 import datetime
@@ -11,64 +12,65 @@ ADDR = (HOST, PORT)
 
 imu = TroykaIMU()
 
-tcpSerSock = socket(AF_INET, SOCK_STREAM)
-tcpSerSock.bind(ADDR)
-tcpSerSock.listen(5)
+
+def print_log(text):
+    print('{}    {}'.format(datetime.datetime.now(), text))
+
 
 # Запрет на ожидание
 # tcpSerSock.setblocking(False)
+def main():
+    while True:
+        try:
+            print_log('Calibration data server was started')
+            print_log('waiting for connection...')
+            # Ждем соединения клиента
+            tcpCliSock, addr = tcpSerSock.accept()
+            # Время ожидания данных от клиента
+            tcpCliSock.settimeout(0.02)
+            print_log('connection from: ' + str(addr))
 
-def print_log(text):
-    print('{}\t{}'.format(datetime.datetime.now(), text))
+            # Соединились, передаем данные
+            while True:
+                m_x, m_y, m_z = imu.magnetometer.read_xyz()
 
-while True:
-    try:
-        print_log('Calibration data server was started')
-        print_log('waiting for connection...')
-        # Ждем соединения клиента
-        tcpCliSock, addr = tcpSerSock.accept()
-        # Время ожидания данных от клиента
-        tcpCliSock.settimeout(0.02)
-        print_log('connection from: ' + str(addr))
+                a_x, a_y, a_z = imu.accelerometer.read_gxyz()
 
-        # Соединились, передаем данные
-        while True:
-            # imufilter.update(imu.gyroscope.read_radians_per_second_xyz(),
-            #              imu.accelerometer.read_gxyz(),
-            #              imu.magnetometer.read_gauss_xyz())
-            # data = imufilter.quaternion.to_angle_axis()
+                g_x, g_y, g_z = imu.gyroscope.read_radians_per_second_xyz()
 
-            # Uncomment this, if you want calibration in gauss measurements
-            m_x, m_y, m_z = imu.magnetometer.read_gauss_xyz()
-            # Uncomment this, if you want calibration in raw measurements
-            # m_x, m_y, m_z = imu.magnetometer.read_xyz()
+                print(imu.magnetometer.read_azimut())
 
-            a_x, a_y, a_z = imu.accelerometer.read_gxyz()
+                data = "{:f}; {:f}; {:f}; " \
+                       "{:f}; {:f}; {:f}; " \
+                       "{:f}; {:f}; {:f}".format(m_x, m_y, m_z,
+                                                 a_x, a_y, a_z,
+                                                 g_x, g_y, g_z)
 
-            g_x, g_y, g_z = imu.gyroscope.read_radians_per_second_xyz()
+                dataencode = data.encode('utf-8').ljust(128, b' ')
 
-            data = "{:f};\t{:f};\t{:f};\t" \
-                   "{:f};\t{:f};\t{:f};\t" \
-                   "{:f};\t{:f};\t{:f}".format(m_x, m_y, m_z,
-                                                a_x, a_y, a_z,
-                                                g_x, g_y, g_z)
+                if dataencode:
+                    try:
+                        # отправляем данные
+                        tcpCliSock.send(dataencode)
+                        time.sleep(0.05)
+                    except:
+                        # разрываем соединение, проблема с клиентом
+                        print_log('Client terminated the connection')
+                        tcpCliSock.close()
+                        break
+                        # Ждем соединение
 
-            dataencode = data.encode('utf-8').ljust(128, b' ')
+        except KeyboardInterrupt:
+            # Закрываем сервер
+            print_log('Server was closed')
+            tcpSerSock.close()
+            break
 
-            if dataencode:
-                try:
-                    # отправляем данные
-                    tcpCliSock.send(dataencode)
-                    time.sleep(0.05)
-                except:
-                    # разрываем соединение, проблема с клиентом
-                    print_log('Client terminated the connection')
-                    tcpCliSock.close()
-                    break
-                    # Ждем соединение
 
-    except KeyboardInterrupt:
-        # Закрываем сервер
-        print_log('Calibration data server was closed')
-        tcpSerSock.close()
-        break
+try:
+    tcpSerSock = socket(AF_INET, SOCK_STREAM)
+    tcpSerSock.bind(ADDR)
+    tcpSerSock.listen(5)
+    main()
+except:
+    print_log('Port is used. Change PORT and try again')
