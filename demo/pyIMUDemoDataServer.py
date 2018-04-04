@@ -12,11 +12,11 @@ ADDR = (HOST, PORT)
 
 imu = TroykaIMU()
 
-calibration_matrix = [[0.858751, 0.029588, 0.022668],
-                      [0.029588, 0.871676, 0.001220],
-                      [0.022668, 0.001220, 0.892654]]
+calibration_matrix = [[0.998677, 0.018022, -0.024219],
+                      [0.018022, 0.932222, -0.018865],
+                      [-0.024219, -0.018865, 1.009983]]
 
-bias = [0.265855, -0.356333, 0.586471]
+bias = [0.151310, -0.032599, 1.712086]
 
 imu.magnetometer.calibrate_matrix(calibration_matrix, bias)
 # imufilter = MadgwickAHRS(beta=1, sampleperiod=1 / 256)
