@@ -12,13 +12,15 @@ ADDR = (HOST, PORT)
 
 imu = TroykaIMU()
 
-calibration_matrix = [[0.998677, 0.018022, -0.024219],
-                      [0.018022, 0.932222, -0.018865],
-                      [-0.024219, -0.018865, 1.009983]]
+calibration_matrix = [[0.936796, 0.010448, -0.010544],
+                      [0.010448, 0.885470, -0.012654],
+                      [-0.010544, -0.012654, 0.984452]]
 
-bias = [0.151310, -0.032599, 1.712086]
+bias = [0.149909, -0.015932, 1.728803]
 
 imu.magnetometer.calibrate_matrix(calibration_matrix, bias)
+
+
 # imufilter = MadgwickAHRS(beta=1, sampleperiod=1 / 256)
 
 # Запрет на ожидание
@@ -30,6 +32,7 @@ def print_log(text):
 def main():
     while True:
         try:
+            print_log('Demo data server was started')
             print_log('waiting for connection...')
             # Ждем соединения клиента
             tcpCliSock, addr = tcpSerSock.accept()
