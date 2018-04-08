@@ -49,7 +49,7 @@ def main():
 
                 data = imufilter.quaternion
 
-                dataencode = data.encode('utf-8').ljust(128, b' ')
+                dataencode = str(data).encode('utf-8').ljust(128, b' ')
 
                 if dataencode:
                     try:
@@ -74,6 +74,8 @@ try:
     tcpSerSock = socket(AF_INET, SOCK_STREAM)
     tcpSerSock.bind(ADDR)
     tcpSerSock.listen(5)
-    main()
+
 except:
     print_log('Port is used. Change PORT and try again')
+
+main()
