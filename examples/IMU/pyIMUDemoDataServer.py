@@ -22,12 +22,12 @@ bias = [962.391696, -162.681348, 11832.188828]
 imu.magnetometer.calibrate_matrix(calibration_matrix, bias)
 
 
-imufilter = MadgwickAHRS(beta=0.022, sampleperiod=1 / 256)
+imufilter = MadgwickAHRS(beta=1, sampleperiod=1/50)
 
 # Запрет на ожидание
 # tcpSerSock.setblocking(False)
 def print_log(text):
-    print('{}    {}'.format(datetime.datetime.now(), text))
+    print('{}\t{}'.format(datetime.datetime.now(), text))
 
 
 def main():
@@ -38,12 +38,12 @@ def main():
             # Ждем соединения клиента
             tcpCliSock, addr = tcpSerSock.accept()
             # Время ожидания данных от клиента
-            tcpCliSock.settimeout(0.02)
+            # tcpCliSock.settimeout(0.02)
             print_log('connection from: ' + str(addr))
 
             # Соединились, передаем данные
             while True:
-
+                start_time = time.clock()
 
                 imufilter.update(imu.gyroscope.read_radians_per_second_xyz(),
                               imu.accelerometer.read_gxyz(),
@@ -58,17 +58,19 @@ def main():
                         try:
                             # отправляем данные
                             tcpCliSock.send(dataencode)
-                            time.sleep(0.05)
+                            #time.sleep(0.05)
                         except:
                             # разрываем соединение, проблема с клиентом
                             print_log('Client terminated the connection')
                             tcpCliSock.close()
                             break
                             # Ждем соединение
-                else:
+                #else:
                     # тут включить контроль fps
-                    time.sleep(0.05)
+                    #time.sleep(0.05)
 
+                imufilter.sample_period = 1 / (time.clock() - start_time)
+                print(imufilter.sample_period)
         except KeyboardInterrupt:
             # Закрываем сервер
             print_log('Server was closed')
