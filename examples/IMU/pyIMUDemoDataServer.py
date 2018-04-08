@@ -1,5 +1,5 @@
 from socket import *
-# from madgwickahrs import MadgwickAHRS
+from madgwickahrs import MadgwickAHRS
 from pytroykaimu import TroykaIMU
 import time
 import datetime
@@ -22,7 +22,7 @@ bias = [962.391696, -162.681348, 11832.188828]
 imu.magnetometer.calibrate_matrix(calibration_matrix, bias)
 
 
-# imufilter = MadgwickAHRS(beta=1, sampleperiod=1 / 256)
+imufilter = MadgwickAHRS(beta=1, sampleperiod=1 / 256)
 
 # Запрет на ожидание
 # tcpSerSock.setblocking(False)
@@ -33,7 +33,7 @@ def print_log(text):
 def main():
     while True:
         try:
-            print_log('Demo data server was started')
+            print_log('IMU Demo data server was started')
             print_log('waiting for connection...')
             # Ждем соединения клиента
             tcpCliSock, addr = tcpSerSock.accept()
@@ -43,21 +43,11 @@ def main():
 
             # Соединились, передаем данные
             while True:
-                # imufilter.update(imu.gyroscope.read_radians_per_second_xyz(),
-                #              imu.accelerometer.read_gxyz(),
-                #              imu.magnetometer.read_gauss_xyz())
-                # data = imufilter.quaternion.to_angle_axis()
+                imufilter.update(imu.gyroscope.read_radians_per_second_xyz(),
+                              imu.accelerometer.read_gxyz(),
+                              imu.magnetometer.read_gauss_xyz())
 
-                m_x, m_y, m_z = imu.magnetometer.read_calibrate_gauss_xyz()
-                a_x, a_y, a_z = imu.accelerometer.read_gxyz()
-                g_x, g_y, g_z = imu.gyroscope.read_radians_per_second_xyz()
-
-                data = "{:f};\t{:f};\t{:f};\t" \
-                       "{:f};\t{:f};\t{:f};\t" \
-                       "{:f};\t{:f};\t{:f};\t{:f}".format(m_x, m_y, m_z,
-                                                          a_x, a_y, a_z,
-                                                          g_x, g_y, g_z,
-                                                          imu.magnetometer.read_azimut())
+                data = imufilter.quaternion
 
                 dataencode = data.encode('utf-8').ljust(128, b' ')
 

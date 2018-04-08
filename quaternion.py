@@ -158,3 +158,6 @@ class Quaternion:
 
     def __array__(self):
         return self._q
+
+    def __str__(self):
+        return "{:.2f};\t{:.2f};\t{:.2f};\t{:.2f}".format(self._q[0], self._q[1], self._q[2], self._q[3])
