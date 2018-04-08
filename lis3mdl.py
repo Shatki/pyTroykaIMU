@@ -268,6 +268,7 @@ class LIS3MDL(object):
         uncalibrated_values = []
         read_values = self.read_xyz()
         for i in range(0, 3):
+            # Если калибровка в Гаусах, то нужно это учесть
             uncalibrated_values.append(read_values[i] - self._bias[i])
 
         for i in range(0, 3):
