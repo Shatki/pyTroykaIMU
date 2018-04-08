@@ -69,7 +69,7 @@ def main():
                     # тут включить контроль fps
                     #time.sleep(0.05)
 
-                imufilter.sample_period = 1 / (time.clock() - start_time)
+                imufilter.sample_period = 50 / (time.clock() - start_time)
                 print(imufilter.sample_period)
         except KeyboardInterrupt:
             # Закрываем сервер
