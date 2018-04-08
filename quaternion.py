@@ -130,7 +130,7 @@ class Quaternion:
             return Quaternion(q)
 
     def __str__(self):
-        return '{:.2f};\t{:.2f};\t{:.2f};\t{:.2f}'.format(self._q[0], self._q[1], self._q[2], self._q[3])
+        return '{:.2f};\t{:.2f};\t{:.2f};\t{:.2f}\n'.format(self._q[0], self._q[1], self._q[2], self._q[3])
 
     def __add__(self, other):
         """
