@@ -129,6 +129,9 @@ class Quaternion:
             q = self._q * other
             return Quaternion(q)
 
+    def __str__(self):
+        return "{:.2f};\t{:.2f};\t{:.2f};\t{:.2f}".format(self._q[0], self._q[1], self._q[2], self._q[3])
+
     def __add__(self, other):
         """
         add two quaternions element-wise or add a scalar to each element of the quaternion
@@ -159,5 +162,4 @@ class Quaternion:
     def __array__(self):
         return self._q
 
-    def __str__(self):
-        return "{:.2f};\t{:.2f};\t{:.2f};\t{:.2f}".format(self._q[0], self._q[1], self._q[2], self._q[3])
+

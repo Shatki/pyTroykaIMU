@@ -45,7 +45,7 @@ def main():
             while True:
                 imufilter.update(imu.gyroscope.read_radians_per_second_xyz(),
                               imu.accelerometer.read_gxyz(),
-                              imu.magnetometer.read_gauss_xyz())
+                              imu.magnetometer.read_calibrate_gauss_xyz())
 
                 data = imufilter.quaternion
 
