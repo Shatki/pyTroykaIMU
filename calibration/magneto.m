@@ -2,7 +2,7 @@ instrreset;
 
 % Enter Your Raspberry Pi pyIMUCalibrationDataServer host
 HOST = '192.168.0.76';
-PORT = 21567;
+PORT = 21566;
 
 % Clear console and workspace
 clc;
@@ -19,8 +19,7 @@ fileID = fopen('calibrate.txt', 'w');
 
 for n = 1:3000
     str1= fscanf(s, '%c', 128);
-    disp(n);
-    disp(str1);
+    disp([int2str(n), char(9), str1]);
     C = strsplit(str1, ';');
 
     m_x=str2double(C(1));

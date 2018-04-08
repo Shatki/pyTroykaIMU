@@ -268,7 +268,7 @@ class LIS3MDL(object):
         uncalibrated_values = []
         read_values = self.read_xyz()
         for i in range(0, 3):
-            # Если калибровка в Гаусах, то нужно это учесть
+            # Обязательно делать калибровку в raw
             uncalibrated_values.append(read_values[i] - self._bias[i])
 
         for i in range(0, 3):
@@ -287,7 +287,8 @@ class LIS3MDL(object):
         if (self._bias[0] + self._bias[1] + self._bias[2]) != 0 and self._calibration_matrix[0][0] != 0:
             sensor = self.calibrate()
         else:
-            sensor = self.read_xyz()
+            print("please, calibrate your sensor first")
+            return 0
         two_pi = 2 * pi
         heading = atan2(sensor[1], sensor[0])
         if heading < 0:

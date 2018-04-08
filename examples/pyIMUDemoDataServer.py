@@ -12,11 +12,12 @@ ADDR = (HOST, PORT)
 
 imu = TroykaIMU()
 
-calibration_matrix = [[1.016108, 0.020963, -0.010820],
-                      [0.020963, 0.973293, -0.009250],
-                      [-0.010820, -0.009250, 1.039254]]
+calibration_matrix = [[0.983175, 0.022738, -0.018581],
+                      [0.022738, 0.942140, -0.022467],
+                      [-0.018581, -0.022467, 1.016113]]
 
-bias = [1035.976446, -193.970608, 11874.773886]
+# raw measurenment only
+bias = [962.391696, -162.681348, 11832.188828]
 
 imu.magnetometer.calibrate_matrix(calibration_matrix, bias)
 
