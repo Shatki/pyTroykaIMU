@@ -38,7 +38,7 @@ def main():
             # Ждем соединения клиента
             tcpCliSock, addr = tcpSerSock.accept()
             # Время ожидания данных от клиента
-            # tcpCliSock.settimeout(0.02)
+            tcpCliSock.settimeout(5)
             print_log('connection from: ' + str(addr))
 
             # Соединились, передаем данные
