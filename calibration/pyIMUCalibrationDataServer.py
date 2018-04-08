@@ -38,8 +38,6 @@ def main():
 
                 g_x, g_y, g_z = imu.gyroscope.read_radians_per_second_xyz()
 
-                print(imu.magnetometer.read_azimut())
-
                 data = "{:f}; {:f}; {:f}; " \
                        "{:f}; {:f}; {:f}; " \
                        "{:f}; {:f}; {:f}".format(m_x, m_y, m_z,

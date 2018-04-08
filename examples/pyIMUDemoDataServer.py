@@ -52,8 +52,6 @@ def main():
                 a_x, a_y, a_z = imu.accelerometer.read_gxyz()
                 g_x, g_y, g_z = imu.gyroscope.read_radians_per_second_xyz()
 
-                print(imu.magnetometer.read_azimut())
-
                 data = "{:f};\t{:f};\t{:f};\t" \
                        "{:f};\t{:f};\t{:f};\t" \
                        "{:f};\t{:f};\t{:f};\t{:f}".format(m_x, m_y, m_z,
