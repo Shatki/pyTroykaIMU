@@ -16,7 +16,7 @@ calibration_matrix = [[0.983175, 0.022738, -0.018581],
                       [0.022738, 0.942140, -0.022467],
                       [-0.018581, -0.022467, 1.016113]]
 
-# raw measurenment only
+# raw measurements only
 bias = [962.391696, -162.681348, 11832.188828]
 
 imu.magnetometer.calibrate_matrix(calibration_matrix, bias)
