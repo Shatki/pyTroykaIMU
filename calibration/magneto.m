@@ -2,7 +2,7 @@ instrreset;
 
 % Enter Your Raspberry Pi pyIMUCalibrationDataServer host
 HOST = '192.168.0.76';
-PORT = 21566;
+PORT = 21567;
 
 % Clear console and workspace
 clc;
